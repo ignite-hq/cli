@@ -16,8 +16,8 @@ type defaultPlugin struct {
 }
 
 const (
-	PluginNetworkVersion = "v0.2.2"
-	PluginNetworkPath    = "github.com/ignite/cli-plugin-network@" + PluginNetworkVersion
+	PluginNetworkVersion = "network/v0.3.0"
+	PluginNetworkPath    = "github.com/ignite/apps/network@" + PluginNetworkVersion
 	PluginRelayerVersion = "hermes/v0.2.4"
 	PluginRelayerPath    = "github.com/ignite/apps/hermes@" + PluginRelayerVersion
 )
