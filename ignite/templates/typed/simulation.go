@@ -4,7 +4,7 @@ import (
 	"github.com/ignite/cli/v29/ignite/pkg/multiformatname"
 )
 
-// TODO(@julienrbrt): remove this line when simulation is brought back
+// TODO(@julienrbrt): remove this line when simulation is brought back.
 func ModuleSimulationMsgModify(
 	content string,
 	_, _ multiformatname.Name,

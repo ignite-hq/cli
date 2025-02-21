@@ -76,6 +76,7 @@
 - [#4474](https://github.com/ignite/cli/pull/4474) Fix issue in `build --release` command
 - [#4479](https://github.com/ignite/cli/pull/4479) Scaffold an `uint64 type crashs Ignite
 - [#4483](https://github.com/ignite/cli/pull/4483) Fix default flag parser for apps
+- [#4532](https://github.com/ignite/cli/pull/4532) Fix non working _shortcuts_ in validator home config
 
 ## [`v28.7.0`](https://github.com/ignite/cli/releases/tag/v28.7.0)
 

@@ -4,8 +4,6 @@ go 1.23.6
 
 replace (
 	github.com/cosmos/ibc-go/v10 => github.com/cosmos/ibc-go/v10 v10.0.0-beta.0
-	github.com/cosmos/cosmos-sdk => github.com/cosmos/cosmos-sdk v0.50.11
-	cosmossdk.io/core => cosmossdk.io/core v0.11.2
 )
 
 replace (

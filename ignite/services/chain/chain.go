@@ -4,6 +4,7 @@ import (
 	"context"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/go-git/go-git/v5"
 	"github.com/spf13/cobra"
@@ -351,6 +352,11 @@ func (c *Chain) DefaultHome() (string, error) {
 	}
 	validator, _ := chainconfig.FirstValidator(cfg)
 	if validator.Home != "" {
+		expandedHome, err := expandHome(validator.Home)
+		if err != nil {
+			return "", err
+		}
+		validator.Home = expandedHome
 		return validator.Home, nil
 	}
 
@@ -533,4 +539,17 @@ func appBackendSourceWatchPaths(protoDir string) []string {
 		"third_party",
 		protoDir,
 	}
+}
+
+// expandHome expands a path that may start with "~" and may contain environment variables.
+func expandHome(path string) (string, error) {
+	if strings.HasPrefix(path, "~") {
+		home, err := os.UserHomeDir()
+		if err != nil {
+			return "", err
+		}
+		// Only replace the first occurrence at the start.
+		path = home + strings.TrimPrefix(path, "~")
+	}
+	return os.ExpandEnv(path), nil
 }

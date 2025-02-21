@@ -36,9 +36,6 @@ type Gentx struct {
 	// Moniker is the validator's (optional) moniker.
 	Moniker string `yaml:"moniker" doc:"Optional moniker for the validator."`
 
-	// Home is directory for config and data.
-	Home string `yaml:"home" doc:"Directory for configuration and data."`
-
 	// KeyringBackend is keyring's backend.
 	KeyringBackend string `yaml:"keyring-backend" doc:"Backend for the keyring."`
 
