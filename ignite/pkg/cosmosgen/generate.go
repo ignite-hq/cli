@@ -87,7 +87,7 @@ func (g *generator) setup(ctx context.Context) (err error) {
 		New(
 			cmdrunner.DefaultStderr(&errb),
 			cmdrunner.DefaultWorkdir(g.appPath),
-		).Run(ctx, step.New(step.Exec("go", "mod", "download"))); err != nil {
+		).Run(ctx, step.New(step.Exec("go", "mod", "download"))); err != nil { // TODO: use gocmd.ModDownload
 		return errors.Wrap(err, errb.String())
 	}
 
