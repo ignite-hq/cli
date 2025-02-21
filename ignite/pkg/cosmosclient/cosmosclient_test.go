@@ -46,6 +46,7 @@ type suite struct {
 
 func newClient(t *testing.T, setup func(suite), opts ...cosmosclient.Option) cosmosclient.Client {
 	t.Helper()
+
 	s := suite{
 		rpcClient:        mocks.NewRPCClient(t),
 		accountRetriever: mocks.NewAccountRetriever(t),
@@ -396,8 +397,6 @@ func TestClientStatus(t *testing.T) {
 }
 
 func TestClientCreateTx(t *testing.T) {
-	t.Skip() // TODO(@julienrbrt): Investigate timeout_timestamp fix need to by extended -> https://github.com/cosmos/cosmos-sdk/pull/22723. This will be done in a follow-up PR.
-
 	var (
 		ctx         = context.Background()
 		accountName = "bob"
@@ -432,13 +431,13 @@ func TestClientCreateTx(t *testing.T) {
 		{
 			name: "ok: with default values",
 			msg: &banktypes.MsgSend{
-				FromAddress: "cosmos1aew8dk9cs3uzzgeldatgzvm5ca2k4m98xhy20x",
-				ToAddress:   "cosmos1fhpcsxn0g8uask73xpcgwxlfxtuunn3ey5ptjv",
+				FromAddress: "from",
+				ToAddress:   "to",
 				Amount: sdktypes.NewCoins(
 					sdktypes.NewCoin("token", math.NewIntFromUint64(1)),
 				),
 			},
-			expectedJSONTx: `{"body":{"messages":[{"@type":"/cosmos.bank.v1beta1.MsgSend","from_address":"cosmos1aew8dk9cs3uzzgeldatgzvm5ca2k4m98xhy20x","to_address":"cosmos1fhpcsxn0g8uask73xpcgwxlfxtuunn3ey5ptjv","amount":[{"denom":"token","amount":"1"}]}],"memo":"","timeout_height":"0","unordered":false,"timeout_timestamp":"0001-01-01T00:00:00Z","extension_options":[],"non_critical_extension_options":[]},"auth_info":{"signer_infos":[],"fee":{"amount":[],"gas_limit":"300000","payer":"","granter":""},"tip":null},"signatures":[]}`,
+			expectedJSONTx: `{"body":{"messages":[{"@type":"/cosmos.bank.v1beta1.MsgSend","from_address":"from","to_address":"to","amount":[{"denom":"token","amount":"1"}]}],"memo":"","timeout_height":"0","extension_options":[],"non_critical_extension_options":[]},"auth_info":{"signer_infos":[],"fee":{"amount":[],"gas_limit":"300000","payer":"","granter":""},"tip":null},"signatures":[]}`,
 			setup: func(s suite) {
 				s.expectPrepareFactory(sdkaddr)
 			},
@@ -449,13 +448,13 @@ func TestClientCreateTx(t *testing.T) {
 				cosmosclient.WithUseFaucet("localhost:1234", "", 0),
 			},
 			msg: &banktypes.MsgSend{
-				FromAddress: "cosmos1aew8dk9cs3uzzgeldatgzvm5ca2k4m98xhy20x",
-				ToAddress:   "cosmos1fhpcsxn0g8uask73xpcgwxlfxtuunn3ey5ptjv",
+				FromAddress: "from",
+				ToAddress:   "to",
 				Amount: sdktypes.NewCoins(
 					sdktypes.NewCoin("token", math.NewIntFromUint64(1)),
 				),
 			},
-			expectedJSONTx: `{"body":{"messages":[{"@type":"/cosmos.bank.v1beta1.MsgSend","from_address":"cosmos1aew8dk9cs3uzzgeldatgzvm5ca2k4m98xhy20x","to_address":"cosmos1fhpcsxn0g8uask73xpcgwxlfxtuunn3ey5ptjv","amount":[{"denom":"token","amount":"1"}]}],"memo":"","timeout_height":"0","unordered":false,"timeout_timestamp":"0001-01-01T00:00:00Z","extension_options":[],"non_critical_extension_options":[]},"auth_info":{"signer_infos":[],"fee":{"amount":[],"gas_limit":"300000","payer":"","granter":""},"tip":null},"signatures":[]}`,
+			expectedJSONTx: `{"body":{"messages":[{"@type":"/cosmos.bank.v1beta1.MsgSend","from_address":"from","to_address":"to","amount":[{"denom":"token","amount":"1"}]}],"memo":"","timeout_height":"0","extension_options":[],"non_critical_extension_options":[]},"auth_info":{"signer_infos":[],"fee":{"amount":[],"gas_limit":"300000","payer":"","granter":""},"tip":null},"signatures":[]}`,
 			setup: func(s suite) {
 				s.expectMakeSureAccountHasToken(sdkaddr.String(), defaultFaucetMinAmount)
 
@@ -468,13 +467,13 @@ func TestClientCreateTx(t *testing.T) {
 				cosmosclient.WithUseFaucet("localhost:1234", "", 0),
 			},
 			msg: &banktypes.MsgSend{
-				FromAddress: "cosmos1aew8dk9cs3uzzgeldatgzvm5ca2k4m98xhy20x",
-				ToAddress:   "cosmos1fhpcsxn0g8uask73xpcgwxlfxtuunn3ey5ptjv",
+				FromAddress: "from",
+				ToAddress:   "to",
 				Amount: sdktypes.NewCoins(
 					sdktypes.NewCoin("token", math.NewIntFromUint64(1)),
 				),
 			},
-			expectedJSONTx: `{"body":{"messages":[{"@type":"/cosmos.bank.v1beta1.MsgSend","from_address":"cosmos1aew8dk9cs3uzzgeldatgzvm5ca2k4m98xhy20x","to_address":"cosmos1fhpcsxn0g8uask73xpcgwxlfxtuunn3ey5ptjv","amount":[{"denom":"token","amount":"1"}]}],"memo":"","timeout_height":"0","unordered":false,"timeout_timestamp":"0001-01-01T00:00:00Z","extension_options":[],"non_critical_extension_options":[]},"auth_info":{"signer_infos":[],"fee":{"amount":[],"gas_limit":"300000","payer":"","granter":""},"tip":null},"signatures":[]}`,
+			expectedJSONTx: `{"body":{"messages":[{"@type":"/cosmos.bank.v1beta1.MsgSend","from_address":"from","to_address":"to","amount":[{"denom":"token","amount":"1"}]}],"memo":"","timeout_height":"0","extension_options":[],"non_critical_extension_options":[]},"auth_info":{"signer_infos":[],"fee":{"amount":[],"gas_limit":"300000","payer":"","granter":""},"tip":null},"signatures":[]}`,
 			setup: func(s suite) {
 				s.expectMakeSureAccountHasToken(sdkaddr.String(), defaultFaucetMinAmount-1)
 				s.expectPrepareFactory(sdkaddr)
@@ -486,13 +485,13 @@ func TestClientCreateTx(t *testing.T) {
 				cosmosclient.WithFees("10token"),
 			},
 			msg: &banktypes.MsgSend{
-				FromAddress: "cosmos1aew8dk9cs3uzzgeldatgzvm5ca2k4m98xhy20x",
-				ToAddress:   "cosmos1fhpcsxn0g8uask73xpcgwxlfxtuunn3ey5ptjv",
+				FromAddress: "from",
+				ToAddress:   "to",
 				Amount: sdktypes.NewCoins(
 					sdktypes.NewCoin("token", math.NewIntFromUint64(1)),
 				),
 			},
-			expectedJSONTx: `{"body":{"messages":[{"@type":"/cosmos.bank.v1beta1.MsgSend","from_address":"cosmos1aew8dk9cs3uzzgeldatgzvm5ca2k4m98xhy20x","to_address":"cosmos1fhpcsxn0g8uask73xpcgwxlfxtuunn3ey5ptjv","amount":[{"denom":"token","amount":"1"}]}],"memo":"","timeout_height":"0","unordered":false,"timeout_timestamp":"0001-01-01T00:00:00Z","extension_options":[],"non_critical_extension_options":[]},"auth_info":{"signer_infos":[],"fee":{"amount":[{"denom":"token","amount":"10"}],"gas_limit":"300000","payer":"","granter":""},"tip":null},"signatures":[]}`,
+			expectedJSONTx: `{"body":{"messages":[{"@type":"/cosmos.bank.v1beta1.MsgSend","from_address":"from","to_address":"to","amount":[{"denom":"token","amount":"1"}]}],"memo":"","timeout_height":"0","extension_options":[],"non_critical_extension_options":[]},"auth_info":{"signer_infos":[],"fee":{"amount":[{"denom":"token","amount":"10"}],"gas_limit":"300000","payer":"","granter":""},"tip":null},"signatures":[]}`,
 			setup: func(s suite) {
 				s.expectPrepareFactory(sdkaddr)
 			},
@@ -504,13 +503,13 @@ func TestClientCreateTx(t *testing.T) {
 				cosmosclient.WithGasPrices("3token"),
 			},
 			msg: &banktypes.MsgSend{
-				FromAddress: "cosmos1aew8dk9cs3uzzgeldatgzvm5ca2k4m98xhy20x",
-				ToAddress:   "cosmos1fhpcsxn0g8uask73xpcgwxlfxtuunn3ey5ptjv",
+				FromAddress: "from",
+				ToAddress:   "to",
 				Amount: sdktypes.NewCoins(
 					sdktypes.NewCoin("token", math.NewIntFromUint64(1)),
 				),
 			},
-			expectedJSONTx: `{"body":{"messages":[{"@type":"/cosmos.bank.v1beta1.MsgSend","from_address":"cosmos1aew8dk9cs3uzzgeldatgzvm5ca2k4m98xhy20x","to_address":"cosmos1fhpcsxn0g8uask73xpcgwxlfxtuunn3ey5ptjv","amount":[{"denom":"token","amount":"1"}]}],"memo":"","timeout_height":"0","unordered":false,"timeout_timestamp":"0001-01-01T00:00:00Z","extension_options":[],"non_critical_extension_options":[]},"auth_info":{"signer_infos":[],"fee":{"amount":[{"denom":"token","amount":"900000"}],"gas_limit":"300000","payer":"","granter":""},"tip":null},"signatures":[]}`,
+			expectedJSONTx: `{"body":{"messages":[{"@type":"/cosmos.bank.v1beta1.MsgSend","from_address":"from","to_address":"to","amount":[{"denom":"token","amount":"1"}]}],"memo":"","timeout_height":"0","extension_options":[],"non_critical_extension_options":[]},"auth_info":{"signer_infos":[],"fee":{"amount":[{"denom":"token","amount":"900000"}],"gas_limit":"300000","payer":"","granter":""},"tip":null},"signatures":[]}`,
 			setup: func(s suite) {
 				s.expectPrepareFactory(sdkaddr)
 			},
@@ -523,8 +522,8 @@ func TestClientCreateTx(t *testing.T) {
 				cosmosclient.WithGasAdjustment(2.1),
 			},
 			msg: &banktypes.MsgSend{
-				FromAddress: "cosmos1aew8dk9cs3uzzgeldatgzvm5ca2k4m98xhy20x",
-				ToAddress:   "cosmos1fhpcsxn0g8uask73xpcgwxlfxtuunn3ey5ptjv",
+				FromAddress: "from",
+				ToAddress:   "to",
 				Amount: sdktypes.NewCoins(
 					sdktypes.NewCoin("token", math.NewIntFromUint64(1)),
 				),
@@ -540,13 +539,13 @@ func TestClientCreateTx(t *testing.T) {
 				cosmosclient.WithGas(""),
 			},
 			msg: &banktypes.MsgSend{
-				FromAddress: "cosmos1aew8dk9cs3uzzgeldatgzvm5ca2k4m98xhy20x",
-				ToAddress:   "cosmos1fhpcsxn0g8uask73xpcgwxlfxtuunn3ey5ptjv",
+				FromAddress: "from",
+				ToAddress:   "to",
 				Amount: sdktypes.NewCoins(
 					sdktypes.NewCoin("token", math.NewIntFromUint64(1)),
 				),
 			},
-			expectedJSONTx: `{"body":{"messages":[{"@type":"/cosmos.bank.v1beta1.MsgSend","from_address":"cosmos1aew8dk9cs3uzzgeldatgzvm5ca2k4m98xhy20x","to_address":"cosmos1fhpcsxn0g8uask73xpcgwxlfxtuunn3ey5ptjv","amount":[{"denom":"token","amount":"1"}]}],"memo":"","timeout_height":"0","unordered":false,"timeout_timestamp":"0001-01-01T00:00:00Z","extension_options":[],"non_critical_extension_options":[]},"auth_info":{"signer_infos":[],"fee":{"amount":[],"gas_limit":"20042","payer":"","granter":""},"tip":null},"signatures":[]}`,
+			expectedJSONTx: `{"body":{"messages":[{"@type":"/cosmos.bank.v1beta1.MsgSend","from_address":"from","to_address":"to","amount":[{"denom":"token","amount":"1"}]}],"memo":"","timeout_height":"0","extension_options":[],"non_critical_extension_options":[]},"auth_info":{"signer_infos":[],"fee":{"amount":[],"gas_limit":"20042","payer":"","granter":""},"tip":null},"signatures":[]}`,
 			setup: func(s suite) {
 				s.expectPrepareFactory(sdkaddr)
 				s.gasometer.EXPECT().
@@ -560,13 +559,13 @@ func TestClientCreateTx(t *testing.T) {
 				cosmosclient.WithGas("auto"),
 			},
 			msg: &banktypes.MsgSend{
-				FromAddress: "cosmos1aew8dk9cs3uzzgeldatgzvm5ca2k4m98xhy20x",
-				ToAddress:   "cosmos1fhpcsxn0g8uask73xpcgwxlfxtuunn3ey5ptjv",
+				FromAddress: "from",
+				ToAddress:   "to",
 				Amount: sdktypes.NewCoins(
 					sdktypes.NewCoin("token", math.NewIntFromUint64(1)),
 				),
 			},
-			expectedJSONTx: `{"body":{"messages":[{"@type":"/cosmos.bank.v1beta1.MsgSend","from_address":"cosmos1aew8dk9cs3uzzgeldatgzvm5ca2k4m98xhy20x","to_address":"cosmos1fhpcsxn0g8uask73xpcgwxlfxtuunn3ey5ptjv","amount":[{"denom":"token","amount":"1"}]}],"memo":"","timeout_height":"0","unordered":false,"timeout_timestamp":"0001-01-01T00:00:00Z","extension_options":[],"non_critical_extension_options":[]},"auth_info":{"signer_infos":[],"fee":{"amount":[],"gas_limit":"20042","payer":"","granter":""},"tip":null},"signatures":[]}`,
+			expectedJSONTx: `{"body":{"messages":[{"@type":"/cosmos.bank.v1beta1.MsgSend","from_address":"from","to_address":"to","amount":[{"denom":"token","amount":"1"}]}],"memo":"","timeout_height":"0","extension_options":[],"non_critical_extension_options":[]},"auth_info":{"signer_infos":[],"fee":{"amount":[],"gas_limit":"20042","payer":"","granter":""},"tip":null},"signatures":[]}`,
 			setup: func(s suite) {
 				s.expectPrepareFactory(sdkaddr)
 				s.gasometer.EXPECT().
@@ -580,13 +579,13 @@ func TestClientCreateTx(t *testing.T) {
 				cosmosclient.WithGasAdjustment(2.4),
 			},
 			msg: &banktypes.MsgSend{
-				FromAddress: "cosmos1aew8dk9cs3uzzgeldatgzvm5ca2k4m98xhy20x",
-				ToAddress:   "cosmos1fhpcsxn0g8uask73xpcgwxlfxtuunn3ey5ptjv",
+				FromAddress: "from",
+				ToAddress:   "to",
 				Amount: sdktypes.NewCoins(
 					sdktypes.NewCoin("token", math.NewIntFromUint64(1)),
 				),
 			},
-			expectedJSONTx: `{"body":{"messages":[{"@type":"/cosmos.bank.v1beta1.MsgSend","from_address":"cosmos1aew8dk9cs3uzzgeldatgzvm5ca2k4m98xhy20x","to_address":"cosmos1fhpcsxn0g8uask73xpcgwxlfxtuunn3ey5ptjv","amount":[{"denom":"token","amount":"1"}]}],"memo":"","timeout_height":"0","unordered":false,"timeout_timestamp":"0001-01-01T00:00:00Z","extension_options":[],"non_critical_extension_options":[]},"auth_info":{"signer_infos":[],"fee":{"amount":[],"gas_limit":"300000","payer":"","granter":""},"tip":null},"signatures":[]}`,
+			expectedJSONTx: `{"body":{"messages":[{"@type":"/cosmos.bank.v1beta1.MsgSend","from_address":"from","to_address":"to","amount":[{"denom":"token","amount":"1"}]}],"memo":"","timeout_height":"0","extension_options":[],"non_critical_extension_options":[]},"auth_info":{"signer_infos":[],"fee":{"amount":[],"gas_limit":"300000","payer":"","granter":""},"tip":null},"signatures":[]}`,
 			setup: func(s suite) {
 				s.expectPrepareFactory(sdkaddr)
 			},
@@ -598,13 +597,13 @@ func TestClientCreateTx(t *testing.T) {
 				cosmosclient.WithGasAdjustment(0),
 			},
 			msg: &banktypes.MsgSend{
-				FromAddress: "cosmos1aew8dk9cs3uzzgeldatgzvm5ca2k4m98xhy20x",
-				ToAddress:   "cosmos1fhpcsxn0g8uask73xpcgwxlfxtuunn3ey5ptjv",
+				FromAddress: "from",
+				ToAddress:   "to",
 				Amount: sdktypes.NewCoins(
 					sdktypes.NewCoin("token", math.NewIntFromUint64(1)),
 				),
 			},
-			expectedJSONTx: `{"body":{"messages":[{"@type":"/cosmos.bank.v1beta1.MsgSend","from_address":"cosmos1aew8dk9cs3uzzgeldatgzvm5ca2k4m98xhy20x","to_address":"cosmos1fhpcsxn0g8uask73xpcgwxlfxtuunn3ey5ptjv","amount":[{"denom":"token","amount":"1"}]}],"memo":"","timeout_height":"0","unordered":false,"timeout_timestamp":"0001-01-01T00:00:00Z","extension_options":[],"non_critical_extension_options":[]},"auth_info":{"signer_infos":[],"fee":{"amount":[],"gas_limit":"20042","payer":"","granter":""},"tip":null},"signatures":[]}
+			expectedJSONTx: `{"body":{"messages":[{"@type":"/cosmos.bank.v1beta1.MsgSend","from_address":"from","to_address":"to","amount":[{"denom":"token","amount":"1"}]}],"memo":"","timeout_height":"0","extension_options":[],"non_critical_extension_options":[]},"auth_info":{"signer_infos":[],"fee":{"amount":[],"gas_limit":"20042","payer":"","granter":""},"tip":null},"signatures":[]}
 `,
 			setup: func(s suite) {
 				s.expectPrepareFactory(sdkaddr)

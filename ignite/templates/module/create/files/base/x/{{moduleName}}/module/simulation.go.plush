@@ -21,10 +21,6 @@ var (
 	_ = simulation.MsgEntryKind
 )
 
-const (
-    // this line is used by starport scaffolding # simapp/module/const
-)
-
 // GenerateGenesisState creates a randomized GenState of the module.
 func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 	accs := make([]string, len(simState.Accounts))
@@ -34,7 +30,6 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 	<%= moduleName %>Genesis := types.GenesisState{
 		Params:	types.DefaultParams(),<%= if (isIBC) { %>
 		PortId: types.PortID,<% } %>
-		// this line is used by starport scaffolding # simapp/module/genesisState
 	}
 	simState.GenState[types.ModuleName] = simState.Cdc.MustMarshalJSON(&<%= moduleName %>Genesis)
 }
