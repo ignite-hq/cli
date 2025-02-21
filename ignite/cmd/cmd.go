@@ -18,7 +18,6 @@ import (
 	uilog "github.com/ignite/cli/v29/ignite/pkg/cliui/log"
 	"github.com/ignite/cli/v29/ignite/pkg/dircache"
 	"github.com/ignite/cli/v29/ignite/pkg/errors"
-	"github.com/ignite/cli/v29/ignite/pkg/gitpod"
 	"github.com/ignite/cli/v29/ignite/pkg/goenv"
 	"github.com/ignite/cli/v29/ignite/pkg/gomodulepath"
 	"github.com/ignite/cli/v29/ignite/version"
@@ -259,10 +258,6 @@ func deprecated() []*cobra.Command {
 }
 
 func checkNewVersion(cmd *cobra.Command) {
-	if gitpod.IsOnGitpod() {
-		return
-	}
-
 	ctx, cancel := context.WithTimeout(cmd.Context(), checkVersionTimeout)
 	defer cancel()
 

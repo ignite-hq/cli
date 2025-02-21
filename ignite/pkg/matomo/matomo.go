@@ -53,8 +53,8 @@ type (
 		// 1 = internal ON not supported at present | 0 = internal OFF.
 		Dimension2 uint `url:"dimension2"`
 
-		// Dimension3 is gitpod (0 or 1).
-		// 1 = isGitpod ON | 0 = isGitpod OFF.
+		// Dimension3 is deprecated.
+		// Should always be 0.
 		Dimension3 uint `url:"dimension3"`
 
 		// Dimension4 ignite version
@@ -116,7 +116,6 @@ type (
 		CWD             string
 		ScaffoldType    string
 		BuildFromSource bool
-		IsGitPod        bool
 		IsCI            bool
 	}
 )
@@ -221,7 +220,6 @@ func (c Client) SendMetric(sessionID string, metric Metric) error {
 		Second:      now.Second(),
 		Dimension1:  0,
 		Dimension2:  formatBool(metric.IsCI),
-		Dimension3:  formatBool(metric.IsGitPod),
 		Dimension4:  metric.Version,
 		Dimension6:  metric.ConfigVersion,
 		Dimension7:  metric.Cmd,

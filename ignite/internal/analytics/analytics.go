@@ -13,7 +13,6 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/ignite/cli/v29/ignite/config"
-	"github.com/ignite/cli/v29/ignite/pkg/gitpod"
 	"github.com/ignite/cli/v29/ignite/pkg/matomo"
 	"github.com/ignite/cli/v29/ignite/pkg/randstr"
 	"github.com/ignite/cli/v29/ignite/pkg/sentry"
@@ -89,7 +88,6 @@ func SendMetric(wg *sync.WaitGroup, cmd *cobra.Command) {
 		Uname:           versionInfo.Uname,
 		CWD:             versionInfo.CWD,
 		BuildFromSource: versionInfo.BuildFromSource,
-		IsGitPod:        gitpod.IsOnGitpod(),
 		IsCI:            getIsCI(),
 	}
 

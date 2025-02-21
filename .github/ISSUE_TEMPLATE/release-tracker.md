@@ -42,7 +42,6 @@ versions of cli to guarantee that no regression is introduced -->
 - [ ] Update [`changelog.md`](https://github.com/ignite/cli/blob/main/changelog.md)
 - [ ] Update [`readme.md](https://github.com/ignite/cli/blob/main/readme.md):
   - [ ] Version matrix.
-  - [ ] Link to Gitpod with a URL to the newly released stable version.
 - [ ] Update docs site:
   - [ ] Add new release tag to [`docs/versioned_docs`](https://github.com/ignite/cli/tree/main/docs/versioned_docs).
 - [ ] After changes to docs site are deployed, check [docs.ignite.com/](https://docs.ignite.com/) is updated.

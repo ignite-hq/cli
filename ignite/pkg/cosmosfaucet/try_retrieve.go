@@ -101,7 +101,7 @@ func guessFaucetURLs(rpcAddress string) ([]*url.URL, error) {
 	}{
 		{"4500", "", "."},
 		{"", "faucet", "."},
-		{"", "4500", "-"}, // Gitpod uses port number as sub domain name.
+		{"", "4500", "-"},
 	}
 
 	// creating guesses addresses by basing RPC address.

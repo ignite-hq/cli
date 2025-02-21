@@ -5,8 +5,7 @@ description: Steps to install Ignite CLI on your local computer.
 
 # Install Ignite CLI
 
-You can run [Ignite CLI](https://github.com/ignite/cli) in a web-based Gitpod IDE or you can install Ignite CLI on your
-local computer.
+You can run [Ignite CLI](https://github.com/ignite/cli) in a web-based IDE or you can install Ignite CLI on your local computer.
 
 ## Prerequisites
 

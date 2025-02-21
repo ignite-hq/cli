@@ -93,12 +93,12 @@ The instructions for installing Ignite CLI manually and configuring your system 
 <details>
   <summary>View development setup instructions</summary>
 
-#### Supported Operating Systems:
+#### Supported Operating Systems
 
 - GNU/Linux
 - macOS
 
-#### Install Go:
+#### Install Go
 
 1. Install the latest version of Go.
 2. Download the release suitable for your system.
@@ -106,7 +106,7 @@ The instructions for installing Ignite CLI manually and configuring your system 
 
 **Note:** We recommend not using `brew` to install Go.
 
-#### Add the Go bin Directory to Your PATH:
+#### Add the Go bin Directory to Your PATH
 
 1. Edit your `~/.bashrc` file and add the following line:
 
@@ -120,7 +120,7 @@ The instructions for installing Ignite CLI manually and configuring your system 
    source ~/.bashrc
    ```
 
-#### Remove Existing Ignite CLI Installations:
+#### Remove Existing Ignite CLI Installations
 
 1. Remove the Ignite CLI binary:
 
@@ -132,13 +132,13 @@ The instructions for installing Ignite CLI manually and configuring your system 
 
 2. Repeat the step until all Ignite CLI installations are removed.
 
-#### Install Ignite CLI:
+#### Install Ignite CLI
 
 ```sh
 curl https://get.ignite.com/cli! | bash
 ```
 
-#### Clone the Ignite CLI Repo:
+#### Clone the Ignite CLI Repo
 
 1. Clone the repository:
 
@@ -152,13 +152,13 @@ curl https://get.ignite.com/cli! | bash
    cd cli
    ```
 
-#### Run make install:
+#### Run make install
 
 ```sh
 make install
 ```
 
-#### Verify Your Ignite CLI Version:
+#### Verify Your Ignite CLI Version
 
 ```sh
 ignite version
@@ -166,7 +166,7 @@ ignite version
 
 </details>
 
-Alternatively, you can open Ignite CLI directly in your web browser via [Gitpod](https://gitpod.io/#https://github.com/ignite/cli).
+Alternatively, you can open Ignite CLI directly in your web browser via [GitHub Codespaces](https://github.com/features/codespaces): [Open in GitHub Codespaces](https://github.dev/ignite/cli).
 
 ## Documentation
 

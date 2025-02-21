@@ -8,7 +8,6 @@ import (
 	"path"
 	"runtime"
 	"runtime/debug"
-	"strconv"
 	"strings"
 	"text/tabwriter"
 
@@ -21,7 +20,6 @@ import (
 	"github.com/ignite/cli/v29/ignite/pkg/cosmosbuf"
 	"github.com/ignite/cli/v29/ignite/pkg/cosmosver"
 	"github.com/ignite/cli/v29/ignite/pkg/errors"
-	"github.com/ignite/cli/v29/ignite/pkg/gitpod"
 	"github.com/ignite/cli/v29/ignite/pkg/xexec"
 )
 
@@ -49,7 +47,6 @@ type Info struct {
 	Arch            string
 	Uname           string
 	CWD             string
-	IsGitpod        bool
 	BuildFromSource bool
 }
 
@@ -163,8 +160,6 @@ func Long(ctx context.Context) (string, error) {
 		write("Your cwd", info.CWD)
 	}
 
-	write("Is on Gitpod", strconv.FormatBool(info.IsGitpod))
-
 	if err := w.Flush(); err != nil {
 		return "", err
 	}
@@ -239,7 +234,6 @@ func GetInfo(ctx context.Context) (Info, error) {
 	info.OS = runtime.GOOS
 	info.Arch = runtime.GOARCH
 	info.GoVersion = strings.TrimSpace(goVersionBuf.String())
-	info.IsGitpod = gitpod.IsOnGitpod()
 	info.BuildFromSource = fromSource()
 
 	if cwd, err := os.Getwd(); err == nil {
